@@ -58,6 +58,7 @@ static char ownerPassword[33] = "\001";
 static char userPassword[33] = "\001";
 static GBool quiet = gFalse;
 static char cfgFileName[256] = "";
+static char charLocFileName[256] = "";
 static GBool printVersion = gFalse;
 static GBool printHelp = gFalse;
 
@@ -108,6 +109,8 @@ static ArgDesc argDesc[] = {
    "don't print any messages or errors"},
   {"-cfg",     argString,   cfgFileName,    sizeof(cfgFileName),
    "configuration file to use in place of .xpdfrc"},
+  {"-charloc", argString,   charLocFileName,sizeof(charLocFileName),
+   "output file position for character locations"},
   {"-v",       argFlag,     &printVersion,  0,
    "print copyright and version info"},
   {"-h",       argFlag,     &printHelp,     0,
@@ -264,7 +267,7 @@ int main(int argc, char *argv[]) {
   textOutControl.marginTop = marginTop;
   textOutControl.marginBottom = marginBottom;
   textOut = new TextOutputDev(textFileName->getCString(), &textOutControl,
-			      gFalse);
+			      gFalse, charLocFileName);
   if (textOut->isOk()) {
     doc->displayPages(textOut, firstPage, lastPage, 72, 72, 0,
 		      gFalse, gTrue, gFalse);

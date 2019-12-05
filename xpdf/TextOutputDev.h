@@ -599,6 +599,8 @@ private:
 class TextOutputDev: public OutputDev {
 public:
 
+  TextOutputDev(char *fileName, TextOutputControl *controlA, GBool append, char *charlocFilename);
+
   // Open a text output file.  If <fileName> is NULL, no file is
   // written (this is useful, e.g., for searching text).  If
   // <physLayoutA> is true, the original physical layout of the text
@@ -725,6 +727,7 @@ private:
 
   TextOutputFunc outputFunc;	// output function
   void *outputStream;		// output stream
+  FILE *charlocStream;  // charloc stream
   GBool needClose;		// need to close the output file?
 				//   (only if outputStream is a FILE*)
   TextPage *text;		// text for the current page

@@ -2921,6 +2921,13 @@ TextBlock *TextPage::split(GList *charsA, int rot) {
   //~ this could use "other content" (vector graphics, rotated text) --
   //~ presence of other content in a gap means we should definitely split
 
+#if 0 //~debug
+  for (int __idx=0;__idx<charsA->getLength();++__idx) printf("%d,", ((TextChar *)(charsA->get(__idx)))->c);
+  printf("\n");
+  for (int __idx=0;__idx<charsA->getLength();++__idx) printf("%c", ((TextChar *)(charsA->get(__idx)))->c);
+  printf("\nLength: %d\n", charsA->getLength());
+#endif
+
   // split vertically
   if (doVertSplit) {
 #if 0 //~debug
@@ -5041,6 +5048,15 @@ static void outputToFile(void *stream, const char *text, int len) {
 }
 
 TextOutputDev::TextOutputDev(char *fileName, TextOutputControl *controlA,
+			     GBool append, char *charlocFilename): TextOutputDev(fileName, controlA, append) {
+  if (charlocFilename) {
+    if (strlen(charlocFilename) > 0) {
+      charlocStream = fopen(charlocFilename, "wb");
+    }
+  }
+}
+
+TextOutputDev::TextOutputDev(char *fileName, TextOutputControl *controlA,
 			     GBool append) {
   text = NULL;
   control = *controlA;
@@ -5115,6 +5131,13 @@ void TextOutputDev::startPage(int pageNum, GfxState *state) {
 void TextOutputDev::endPage() {
   if (outputStream) {
     text->write(outputStream, outputFunc);
+  }
+  if (charlocStream) {
+    fprintf(charlocStream, "new page\n");
+    for (int __idx = 0; __idx < text->chars->getLength(); ++__idx) {
+      TextChar *ch = (TextChar *)(text->chars->get(__idx));
+      fprintf(charlocStream, "unicode: %d, xMin: %.4f, yMin: %.4f, xMax: %.4f, yMax: %.4f, fontSize: %.4f\n", ch->c, ch->xMin, ch->yMin, ch->xMin, ch->yMax, ch->fontSize);
+    }
   }
 }
 
