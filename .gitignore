@@ -10,3 +10,11 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 aconf.h
+fofi/libfofi.a
+goo/libgoo.a
+xpdf/pdfdetach
+xpdf/pdffonts
+xpdf/pdfimages
+xpdf/pdfinfo
+xpdf/pdftops
+xpdf/pdftotext

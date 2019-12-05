@@ -1,6 +1,15 @@
 Xpdf
 ====
 
+**Edit**
+
+This project is forked from the original Xpdf project with some
+modification. Specifically, it adds an output option for the computed
+character position in pdftotext so that other softwares can have more
+meta data about the original text.
+
+====
+
 version 4.02
 2019-sep-25
 
@@ -190,7 +199,7 @@ Various people have contributed modifications made for use by the
 pdftex project:
 
 * Han The Thanh
-* Martin Schröder of ArtCom GmbH
+* Martin Schrï¿½der of ArtCom GmbH
 
 
 References
